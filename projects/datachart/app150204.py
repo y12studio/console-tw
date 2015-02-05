@@ -2,9 +2,30 @@
 # -*- coding: utf-8 -*-
 #
 #
-import requests,io,json,hashlib
+import requests,io,json,hashlib,jutils
 
-url = "http://file.data.gov.tw/event/政府資料開放平臺資料集清單.json"
+class ConvertList150204:
+
+    def __init__(self):
+        self.url = "http://file.data.gov.tw/event/政府資料開放平臺資料集清單.json"
+
+    def buildDict(self):
+        jr = jutils.getHttpJson(self.url)
+        rdict = {}
+        records = {}
+        meta={}
+        for item in jr['Records']:
+            rid = hashlib.sha256(item[u'資料集名稱'].encode('utf-8')).hexdigest()
+            v = {}
+            v['name'] = item[u'資料集名稱']
+            v['url'] = item[u'下載連結']
+            v['format'] = item[u'檔案格式']
+            records[rid] = v
+        meta['count']=len(jr['Records'])
+        rdict['records'] = records
+        rdict['meta'] = meta
+        return rdict
+
 """
  {
             "主要欄位說明": "港口代碼,船舶英文名稱,船舶中文名稱,預定進港日期及時間,實際進港日期及日時,預定出港日期及時間,實際出港日期及時間",
@@ -25,41 +46,10 @@ url = "http://file.data.gov.tw/event/政府資料開放平臺資料集清單.jso
         }
 """
 
-def jdump(obj):
-    return json.dumps(obj, indent=4, ensure_ascii=False, encoding='utf8')
-
-def jload(json_path):
-    fp = open(json_path, 'r')
-    return json.load(fp, encoding='utf8')
-
-def jwrite(filename, jdump):
-    with io.open(filename, 'w', encoding='utf8') as fr:
-        fr.write(jdump)
-
-def getRawJson():
-    r = requests.get(url)
-    return r.json()
-
-def build(filename):
-    jr = getRawJson()
-    rdict = {}
-    i = 0
-    for item in jr['Records']:
-        rid = hashlib.sha256(item[u'資料集名稱'].encode('utf-8')).hexdigest()
-        v = {}
-        v['name'] = item[u'資料集名稱']
-        v['url'] = item[u'下載連結']
-        v['format'] = item[u'檔案格式']
-        # only save first 10 items
-        i+=1
-        if i < 10 :
-            rdict[rid] = v
-    meta={}
-    meta['count']=len(jr['Records'])
-    rdict['meta'] = meta
-    jwrite(filename,jdump(rdict))
-    print meta
-
 if __name__ == '__main__':
     # 150204 parse 政府資料開放平臺資料集清單.json {'count': 3533} but data.gov.tw show 4135?
-    build('raw150204.json')
+    #build('raw150204.json')
+    app = ConvertList150204()
+    #rdict = app.buildDict()
+    #jutils.jwrite('raw150204_1.json',rdict)
+    print('hello')
