@@ -5,7 +5,7 @@ angular.module('YourApp', ['ngMaterial', 'ngResource']).controller(
         '$resource',
         function($scope, $resource) {
 
-            $scope.foo = "hello console";
+            $scope.y12studio = "Y12STUDIO";
 
         }
     ]);

@@ -2,8 +2,14 @@ md-card {
     margin:1em;
     padding: 1em;
 }
+
 div.icon {
     margin-left: 1em;
+    text-align: center;
+}
+
+div.col {
+    margin: 0.5em;
     text-align: center;
 }
 
