@@ -1,4 +1,14 @@
 
+Tue Feb 10 18:52:45 CST 2015
+
+```
+~/git/console-tw$ cd projects/datachart/
+~/git/console-tw/projects/datachart$ python build-org-term.py
+mv ../websites/root/data/org-name-taxonomy-term.json ../websites/root/data/org-name-taxonomy-term-150206.json 
+mv org-name-taxonomy-term.json ../websites/root/data/
+```
+
+
 Thu Feb  5 10:45:25 CST 2015
 
 ```
