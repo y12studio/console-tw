@@ -16,7 +16,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import requests,io,json,hashlib,jutils,datetime
+import requests,io,json,hashlib,jutils,datetime,shutil
 from BeautifulSoup import BeautifulSoup as soup
 
 class ConvertTool:
@@ -56,4 +56,6 @@ if __name__ == '__main__':
     app = ConvertTool()
     url = 'http://data.gov.tw/data_usage/orgfullname/json'
     r = app.buildDict(url)
-    jutils.jwrite('org-name-taxonomy-term.json',r)
+    filename = 'org-term'
+    parentDir = '../websites/root/data/org-term/v1/'
+    jutils.jwriteWithDateTag(parentDir, filename,r)

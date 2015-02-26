@@ -1,10 +1,17 @@
+Sun Feb 15 15:55:20 CST 2015
+
+```
+$ cd projects/datachart/
+$ python build-org-term.py
+$ cd ../websites && rsync -av root/ USERNAME@console.tw:/home/USERNAME/console.tw
+```
 
 Tue Feb 10 18:52:45 CST 2015
 
 ```
 ~/git/console-tw$ cd projects/datachart/
 ~/git/console-tw/projects/datachart$ python build-org-term.py
-mv ../websites/root/data/org-name-taxonomy-term.json ../websites/root/data/org-name-taxonomy-term-150206.json 
+mv ../websites/root/data/org-name-taxonomy-term.json ../websites/root/data/org-name-taxonomy-term-150206.json
 mv org-name-taxonomy-term.json ../websites/root/data/
 ```
 

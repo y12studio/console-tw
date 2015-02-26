@@ -16,7 +16,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import requests,io,json
+import requests,io,json,shutil
+from datetime import datetime
 
 def jdump(obj):
     return json.dumps(obj, indent=4, ensure_ascii=False, encoding='utf8')
@@ -30,6 +31,19 @@ def jwrite(filename, obj):
     with io.open(filename, 'w', encoding='utf8') as fr:
         fr.write(jdumpStr)
 
+def jwriteWithDateTag(parentDir, filenameWithoutExt, obj):
+    pathpref = parentDir+filenameWithoutExt
+    jwrite(pathpref+'.json',obj)
+    shutil.copy(pathpref+'.json',pathpref+'-D'+getDateNowTag()+'.json')
+
 def getHttpJson(url):
     r = requests.get(url)
     return r.json()
+
+def getDateNowTag():
+    i = datetime.now()
+    return i.strftime('%Y%m%d')
+
+def getDateTimeNowTag():
+    i = datetime.now()
+    return i.strftime('%Y%m%d-%H%M%S')
