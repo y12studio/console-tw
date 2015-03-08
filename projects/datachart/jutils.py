@@ -16,8 +16,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import requests,io,json,shutil
+import requests,io,json,shutil,hashlib,csv
 from datetime import datetime
+from StringIO import StringIO
+
+def hashHexMd5Utf8(str):
+    return hashlib.md5(str.encode('utf-8')).hexdigest()
 
 def jdump(obj):
     return json.dumps(obj, indent=4, ensure_ascii=False, encoding='utf8')
@@ -38,7 +42,13 @@ def jwriteWithDateTag(parentDir, filenameWithoutExt, obj):
 
 def getHttpJson(url):
     r = requests.get(url)
+    r.encoding = 'utf-8'
     return r.json()
+
+def getHttpCsv(url):
+    r = requests.get(url)
+    r.encoding = 'utf-8'
+    return r.text.splitlines()
 
 def getDateNowTag():
     i = datetime.now()
